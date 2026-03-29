@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar/Header -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>📋 Task Manager</h2>
+                <p id="userEmail" class="user-email"></p>
+            </div>
+            <button id="logoutBtn" class="btn btn-danger">Logout</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="container">
+                <!-- Header Section -->
+                <div class="header-section">
+                    <h1>My Tasks</h1>
+                    <button id="createTaskBtn" class="btn btn-primary">+ New Task</button>
+                </div>
+
+                <!-- Create Task Form -->
+                <div id="createModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Create New Task</h2>
+                            <button class="modal-close">&times;</button>
+                        </div>
+                        <form id="createTaskForm">
+                            <div class="form-group">
+                                <label for="createTitle">Task Title *</label>
+                                <input type="text" id="createTitle" placeholder="Enter task title" required minlength="3" maxlength="200">
+                            </div>
+                            <div class="form-group">
+                                <label for="createDescription">Description</label>
+                                <textarea id="createDescription" placeholder="Enter task description" maxlength="1000" rows="4"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="createStatus">Status *</label>
+                                <select id="createStatus" required>
+                                    <option value="pending">Pending</option>
+                                    <option value="in-progress">In Progress</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Create Task</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Edit Task Modal -->
+                <div id="editModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Edit Task</h2>
+                            <button class="modal-close">&times;</button>
+                        </div>
+                        <form id="editTaskForm">
+                            <div class="form-group">
+                                <label for="editTitle">Task Title *</label>
+                                <input type="text" id="editTitle" placeholder="Enter task title" required minlength="3" maxlength="200">
+                            </div>
+                            <div class="form-group">
+                                <label for="editDescription">Description</label>
+                                <textarea id="editDescription" placeholder="Enter task description" maxlength="1000" rows="4"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="editStatus">Status *</label>
+                                <select id="editStatus" required>
+                                    <option value="pending">Pending</option>
+                                    <option value="in-progress">In Progress</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">All Tasks</button>
+                    <button class="filter-btn" data-filter="pending">Pending</button>
+                    <button class="filter-btn" data-filter="in-progress">In Progress</button>
+                    <button class="filter-btn" data-filter="completed">Completed</button>
+                </div>
+
+                <!-- Tasks List -->
+                <div id="tasksContainer" class="tasks-container">
+                    <div class="loading">Loading tasks...</div>
+                </div>
+
+                <!-- Pagination -->
+                <div id="paginationContainer" class="pagination-container">
+                    <button id="prevPageBtn" class="btn btn-secondary">← Previous</button>
+                    <span id="pageIndicator" class="page-info">Page 1</span>
+                    <button id="nextPageBtn" class="btn btn-secondary">Next →</button>
+                </div>
+
+                <!-- Message -->
+                <div id="message" class="message"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
