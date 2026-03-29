@@ -263,13 +263,17 @@ if (createTaskForm) {
 
             if (!response.ok) {
                 const data = await response.json();
+                console.error('API Error:', data);
                 alert(data.message || 'Failed to create task');
                 return;
             }
 
+            const createdTask = await response.json();
+            console.log('Task created:', createdTask);
+            
             closeCreateModal();
             currentPage = 1;
-            loadTasks();
+            await loadTasks();
             alert('Task created successfully!');
         } catch (error) {
             alert('Error: ' + error.message);

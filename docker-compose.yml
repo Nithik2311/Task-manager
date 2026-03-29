@@ -4,7 +4,7 @@ services:
     container_name: task_manager_db
     environment:
       MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: task_manager
+      MYSQL_DATABASE: task_manager_db
       MYSQL_USER: taskuser
       MYSQL_PASSWORD: taskpassword
     ports:
@@ -12,6 +12,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --default-authentication-plugin=mysql_native_password
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
@@ -26,7 +27,7 @@ services:
       DB_HOST: mysql
       DB_USER: taskuser
       DB_PASSWORD: taskpassword
-      DB_NAME: task_manager
+      DB_NAME: task_manager_db
       DB_PORT: 3306
       PORT: 3000
       NODE_ENV: production

@@ -40,32 +40,37 @@ const getAllTasks = async (req, res) => {
     const { page, limit } = req.pagination;
     const offset = (page - 1) * limit;
 
+    console.log('Getting tasks for user:', userId, 'page:', page, 'limit:', limit);
+
     // Get total count
-    const [[{ total }]] = await pool.execute(
+    const [countResult] = await pool.execute(
       'SELECT COUNT(*) as total FROM tasks WHERE user_id = ?',
       [userId]
     );
+    const total = countResult[0].total;
+
+    console.log('Total tasks found:', total);
 
     // Get paginated tasks
     const [tasks] = await pool.execute(
-      'SELECT * FROM tasks WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?',
-      [userId, limit, offset]
+      `SELECT * FROM tasks WHERE user_id = ? ORDER BY created_at DESC LIMIT ${parseInt(limit)} OFFSET ${parseInt(offset)}`,[userId]
     );
+
+    console.log('Tasks retrieved:', tasks.length);
 
     return res.status(200).json({
       status: 'success',
       message: 'Tasks retrieved successfully',
-      data: {
-        tasks,
-        pagination: {
-          current_page: page,
-          per_page: limit,
-          total: total,
-          total_pages: Math.ceil(total / limit)
-        }
+      data: tasks,
+      pagination: {
+        current_page: page,
+        per_page: limit,
+        total: total,
+        total_pages: Math.ceil(total / limit)
       }
     });
   } catch (error) {
+    console.error('Error in getAllTasks:', error);
     return res.status(500).json({
       status: 'error',
       message: 'Error retrieving tasks',
